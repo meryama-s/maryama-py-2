@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-yellow-400 text-black">
+    <header class="bg-gradient-to-r from-yellow-400 to-yellow-600 p-6 flex items-center space-x-4" style="box-shadow: 0 8px 10px -5px rgba(0, 0, 0, 0.5);">
+    <!-- Icon -->
+    <i class="fas fa-utensils text-white text-4xl drop-shadow-lg"></i>
+    <!-- Title -->
+    <h1 class="text-red-700 text-4xl font-extrabold drop-shadow-md border-t border-red-700">Restaurant Menu</h1>
+  </header>
+
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl font-bold mb-6 text-black">The Menue</h1>
+
+        <a href="{{ url_for('add_item') }}" 
+           class="inline-block mb-6 px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
+           Add New Meal
+        </a>
+
+        <ul class="space-y-4">
+            {% for item in items %}
+            <li class="flex justify-between items-center p-4 border border-red-700 rounded shadow-sm hover:shadow-md transition">
+                <div>
+                    <span class="font-semibold text-lg">{{ item[1] }}</span> - 
+                    <span class="text-gray-700">${{ item[2] }}</span>
+                </div>
+                <div class="space-x-4">
+                    <a href="{{ url_for('update_item', item_id=item[0]) }}" 
+                       class="text-blue-600 hover:text-blue-800 font-medium">Edit</a>
+                    <a href="{{ url_for('delete_item', item_id=item[0]) }}" 
+                       class="text-red-600 hover:text-red-800 font-medium">Delete</a>
+                </div>
+            </li>
+            {% else %}
+            <li class="text-gray-500">No menu items found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>

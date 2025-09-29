@@ -1,5 +1,5 @@
 from menu_item import MenuItem
-from week2.day4.exercice_.menu_manager import MenuManager
+from week2.day4.exercice_XP.menu_manager import MenuManager
 
 def show_user_menu():
     while True:

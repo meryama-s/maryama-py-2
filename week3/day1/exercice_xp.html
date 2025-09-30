@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<script>
+//exercice 1
+
+const people = ["Greg", "Mary", "Devon", "James"];
+people.shift();
+console.log(people); 
+
+people.splice(2, 1, "Jason");
+console.log(people);
+
+people.push("maryama");
+console.log(people);
+
+
+console.log(people.indexOf("Mary"));
+
+
+console.log(people.slice(1, 3));
+
+
+console.log(people.indexOf('Foo'));// it will return -1 because 'foo' doesn't existe in the array people
+
+let last = people[people.length -1];
+console.log(last);
+//the length of the array starts from 1 and if and if we want to start from the end we have to reverse by -1, in the other hand indexOf start from the 0 and if we ask for an item which it doest belog to the array it will return -1 as a result
+
+for(let person of people){
+    console.log(person);
+};
+
+for(let s = people.length -1; s >= 0; s--){
+    if (people[s] === "Devon") {
+        break;
+    }
+    console.log(people[s]);
+};
+
+//exerice2
+
+let my_fav_color=['blue sky','black', 'red', 'gray','magenta'];
+for(let m =0; m < my_fav_color.length;m++ ){
+    console.log("My #" + (m + 1) + " choice is " + my_fav_color[m]);
+};
+//suffix
+const suffixes = ["st", "nd", "rd", "th", "th"];
+for (let m = 0; m < my_fav_color.length; m++) {
+    let suffix = suffixes[m] || "th"; 
+    console.log("My " + (m + 1) + suffix + " choice is " + my_fav_color[m]);
+};
+
+
+//exercie 3
+let number;
+
+do {
+    number = prompt("Please enter a number:");
+    number = Number(number);
+
+    console.log("Type of the input:", typeof number);//  check on the type of the value
+
+} while (isNaN(number) || number < 10); //avoid NuN
+
+console.log("The number is:", number);
+
+
+//exercice 4
+const building = {
+    numberOfFloors: 4,
+    numberOfAptByFloor: {
+        firstFloor: 3,
+        secondFloor: 4,
+        thirdFloor: 9,
+        fourthFloor: 2,
+    },
+    nameOfTenants: ["Sarah", "Dan", "David"],
+    numberOfRoomsAndRent:  {
+        sarah: [3, 990],
+        dan:  [4, 1000],
+        david: [1, 500],
+    },
+};
+console.log("Number of floors:", building.numberOfFloors); //4
+
+const apt1 = building.numberOfAptByFloor.firstFloor;
+const apt3 = building.numberOfAptByFloor.thirdFloor;
+console.log("Apartments on floor 1 and 3:", apt1 + apt3); //12
+const secondTenant = building.nameOfTenants[1]; // "Dan"
+const roomsOfSecondTenant = building.numberOfRoomsAndRent.dan[0];
+
+console.log("Second tenant:", secondTenant);
+console.log("Number of rooms:", roomsOfSecondTenant);//4
+
+const sarahRent = building.numberOfRoomsAndRent.sarah[1];
+const davidRent = building.numberOfRoomsAndRent.david[1];
+const danRent = building.numberOfRoomsAndRent.dan[1];
+
+if (sarahRent + davidRent > danRent) {
+    building.numberOfRoomsAndRent.dan[1] = 1200;
+    console.log("Dan's rent increased to:", building.numberOfRoomsAndRent.dan[1]);
+} else {
+    console.log("Dan's rent stays the same:", danRent);
+};//1200
+
+//exercice 5
+const family = {
+    father: "abdelmajid",
+    mother: "nezha",
+    son: "mossabe",
+    daughter: "maryama"
+};
+for (let key in family) {
+    console.log("Key:", key);
+};
+
+for (let key in family) {
+    console.log("Value:", family[key]);
+};
+
+// exercice 6
+const details = {
+  my: 'name',
+  is: 'Rudolf',
+  the: 'reindeer'
+};
+let aa = "";
+for (let key in details) {
+  aa += key + " " + details[key] + " ";
+};
+
+console.log(aa.trim());// trim removes spaces
+
+
+//exercice 7
+const names = ["Jack", "Philip", "Sarah", "Amanda", "Bernard", "Kyle"];
+
+let secretName = names
+  .map(name => name[0])   // it take the 1st letter from each word
+  .sort()                 // sort letters
+  .join("");              // groupe them in one string
+
+console.log(secretName);
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    
+</body>
+</html>

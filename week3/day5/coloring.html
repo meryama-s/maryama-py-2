@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pro Coloring Grid — Single file</title>
+  <style>
+    /* styling with variables*/
+@import url('https://fonts.googleapis.com/css2?family=Eater&display=swap');
+    :root{
+      --bg:#030818;
+      --panel:#051529;
+      --card:#0b1220;
+      --muted:#8994a3;
+      --accent:#3f37db;
+      --glass: rgba(255,255,255,0.03);
+    }
+    /*using border box to a better result*/
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Eater", serif;;
+      color:#e6eef6;
+      background: linear-gradient(180deg,#041021 0%, #071029 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:30px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--glass);
+      padding: 14px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+    }
+
+    h1{ margin:0 0 12px; font-size:18px }
+    label{ display:block; font-size:13px; color:var(--muted); margin-top:8px }
+
+    .tools { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px }
+    button { background: rgba(255,255,255,0.03); color: inherit; border:0; padding:8px 10px; border-radius:8px; cursor:pointer; font-size:13px }
+    button.active { background: linear-gradient(90deg,var(--accent),#ff02c8); color:#ffffff }
+    .small { padding:6px 8px; font-size:12px }
+
+    .palette { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px }
+    .swatch { width:34px; height:34px; border-radius:6px; border:2px solid rgba(255,255,255,0.06); cursor:pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+
+    .canvas-wrap { display:flex; flex-direction:column; gap:10px; align-items:center; }
+    .canvas-card { background: var(--glass); padding:12px; border-radius:12px; display:flex; flex-direction:column; align-items:center; }
+
+    
+    .canvas-box {
+      width: 480px;           
+      height: 480px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: #ffffff;
+      border-radius:8px;
+      overflow:hidden;
+      border: 2px solid rgba(255,255,255,0.06);
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    }
+
+    canvas {
+      display:block;
+      image-rendering: pixelated;
+      width:100%; 
+      height:100%;
+      touch-action: none;
+      background:#fff;
+    }
+
+    .muted { color:var(--muted); font-size:13px }
+
+    @media (max-width:900px){
+      .app { grid-template-columns: 1fr; max-width:92vw }
+      .canvas-box { width: min(90vw, 480px); height: min(90vw, 480px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="panel">
+      <h1>Coloring Squares</h1>
+      <div class="muted">Show up your own creativity</div>
+
+      <label>Grid size: <span id="sizeLabel">24 × 24</span></label>
+      <input id="sizeRange" type="range" min="8" max="80" value="24" style="width:100%">
+
+      <label>Tools</label>
+      <div class="tools" id="toolButtons">
+        <button id="paintBtn" class="active" title="Paint (P)">Paint</button>
+        <button id="eraseBtn" title="Erase (E)">Erase</button>
+        <button id="fillBtn" title="Fill (F)">Fill</button>
+        <button id="eyeBtn" title="Eyedrop (I)">Eyedrop</button>
+        <button id="clearBtn" class="small" title="Clear">Clear</button>
+        <button id="undoBtn" title="Undo (Ctrl+Z)">Undo</button>
+        <button id="redoBtn" title="Redo (Ctrl+Y)">Redo</button>
+      </div>
+
+      <label>Palette</label>
+      <div class="palette" id="palette"></div>
+      <div style="margin-top:10px; display:flex; gap:8px;">
+        <input id="colorInput" type="color" value="#000000">
+        <button id="addSwatch" class="small">Add</button>
+        <button id="resetPalette" class="small">Reset</button>
+      </div>
+
+      <div style="margin-top:12px" class="muted">Shortcuts: P/E/F/I — Ctrl+Z / Ctrl+Y</div>
+      <textarea id="jsonArea" placeholder='{"size":24,"palette":["#fff","#000"],"cells":[...]}'
+        style="width:100%; height:88px; margin-top:10px; background:rgba(0,0,0,0.25); color:#e6eef6 ;border-radius:6px; border:1px solid rgba(255,255,255,0.04); padding:8px"></textarea>
+    </aside>
+
+    <main class="canvas-wrap">
+      <div class="canvas-card panel">
+        <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+          <div class="muted">Your Board</div>
+          <div class="muted">Cell: <span id="hoverCell">—</span></div>
+        </div>
+
+        <div class="canvas-box">
+          
+          <canvas id="gridCanvas" width="480" height="480"></canvas>
+        </div>
+
+        <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-top:10px">
+          <div class="muted">Zoom: <span id="zoomLabel">1×</span></div>
+          <div style="display:flex;gap:8px">
+            <button id="zoomIn" class="small">Zoom +</button>
+            <button id="zoomOut" class="small">Zoom -</button>
+            <button id="fitBtn" class="small">Fit</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // get the elements
+    const canvas = document.getElementById('gridCanvas');
+    const ctx = canvas.getContext('2d');
+    const sizeRange = document.getElementById('sizeRange');
+    const sizeLabel = document.getElementById('sizeLabel');
+    const paletteEl = document.getElementById('palette');
+    const colorInput = document.getElementById('colorInput');
+    const addSwatch = document.getElementById('addSwatch');
+    const resetPalette = document.getElementById('resetPalette');
+    const paintBtn = document.getElementById('paintBtn');
+    const eraseBtn = document.getElementById('eraseBtn');
+    const fillBtn = document.getElementById('fillBtn');
+    const eyeBtn = document.getElementById('eyeBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const undoBtn = document.getElementById('undoBtn');
+    const redoBtn = document.getElementById('redoBtn');
+   
+    const jsonArea = document.getElementById('jsonArea');
+    const hoverCell = document.getElementById('hoverCell');
+    const zoomLabel = document.getElementById('zoomLabel');
+    const zoomIn = document.getElementById('zoomIn');
+    const zoomOut = document.getElementById('zoomOut');
+    const fitBtn = document.getElementById('fitBtn');
+
+    let gridSize = parseInt(sizeRange.value, 10);
+    let cells = new Array(gridSize * gridSize).fill('#ffffff');
+    let palette = ['#ffffff','#000000','#ff4757','#1e90ff','#2ed573','#ffa502'];
+    let currentColor = '#000000';
+    let tool = 'paint'; // paint | erase | fill | eye
+    let isPointerDown = false;
+    let zoom = 1;
+
+    // history
+    const history = { past: [], future: [] };
+    function pushHistory(){
+       history.past.push(cells.slice());
+       history.future = []; updateUndoRedo();
+       }
+    function undo(){
+       if(!history.past.length) return;
+       history.future.push(cells.slice()
+    );
+       cells = history.past.pop();
+       draw();
+       updateUndoRedo();
+
+     }
+    function redo(){
+       if(!history.future.length) return;
+       history.past.push(cells.slice()
+    );
+       cells = history.future.pop();
+       draw();
+       updateUndoRedo();
+
+     }
+    function updateUndoRedo(){
+       undoBtn.disabled = history.past.length===0;
+       redoBtn.disabled = history.future.length===0;
+
+     }
+
+    // drawing
+    const DEFAULT_CELL = 12; // internal export pixel per cell for png
+    function draw(cellsArr = cells){
+      // set internal buffer size according to grid + zoom
+      const cellPixel = Math.max(6, Math.floor(480 / gridSize * zoom));
+      canvas.width = gridSize * cellPixel;
+      canvas.height = gridSize * cellPixel;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      for(let y=0; y<gridSize; y++){
+        for(let x=0; x<gridSize; x++){
+          const idx = y*gridSize + x;
+          ctx.fillStyle = (cellsArr[idx] || '#ffffff');
+          ctx.fillRect(x*cellPixel, y*cellPixel, cellPixel, cellPixel);
+        }
+      }
+      // thin grid-lines
+      ctx.strokeStyle = 'rgba(0,0,0,0.12)'; //black transparency
+      ctx.lineWidth = 1;
+      for(let i=0;i<=gridSize;i++){
+        const pos = i*cellPixel + 0.5;
+        ctx.beginPath(); ctx.moveTo(pos,0); ctx.lineTo(pos,canvas.height); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0,pos); ctx.lineTo(canvas.width,pos); ctx.stroke();
+      }
+      zoomLabel.textContent = zoom.toFixed(2) + '×';
+    }
+
+    function pointerToCell(evt){
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.floor((evt.clientX - rect.left) / (canvas.width / gridSize));
+      const y = Math.floor((evt.clientY - rect.top) / (canvas.height / gridSize));
+      if(x<0||y<0||x>=gridSize||y>=gridSize) return null;
+      return {x,y,index: y*gridSize + x};
+    }
+
+    function paintCell(index, color){
+      if(cells[index] === color) return;
+      cells[index] = color;
+      drawCell(index);
+    }
+
+    function drawCell(index){
+      const pixel = canvas.width / gridSize;
+      const x = index % gridSize; const y = Math.floor(index / gridSize);
+      ctx.fillStyle = cells[index] || '#ffffff';
+      ctx.fillRect(x*pixel, y*pixel, pixel, pixel);
+      ctx.strokeStyle = 'rgba(0,0,0,0.12)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x*pixel + 0.5, y*pixel + 0.5, pixel, pixel);
+    }
+
+    function floodFill(index, targetColor, replacement){
+      if(targetColor === replacement) return;
+      const stack = [index];
+      while(stack.length){
+        const i = stack.pop();
+        if(cells[i] !== targetColor) continue;
+        cells[i] = replacement;
+        const x = i % gridSize, y = Math.floor(i/gridSize);
+        if(x>0) stack.push(i-1);
+        if(x<gridSize-1) stack.push(i+1);
+        if(y>0) stack.push(i-gridSize);
+        if(y<gridSize-1) stack.push(i+gridSize);
+      }
+    }
+
+    //palette UI
+    function renderPalette(){
+      paletteEl.innerHTML = '';
+      palette.forEach(c=>{
+        const d = document.createElement('div');
+        d.className = 'swatch';
+        d.style.background = c;
+        d.title = c;
+        if(c === currentColor) d.style.outline = '3px solid rgba(255,255,255,0.06)';
+        d.addEventListener('click', ()=>{ currentColor = c; colorInput.value = c; setActiveButton('paint'); });
+        paletteEl.appendChild(d);
+      });
+    }
+    addSwatch.addEventListener('click', ()=>{ palette.unshift(colorInput.value); renderPalette(); });
+    resetPalette.addEventListener('click', ()=>{ palette = ['#ffffff','#000000','#ff4757','#1e90ff','#2ed573','#ffa502']; renderPalette(); });
+
+    colorInput.addEventListener('input', (e)=>{ currentColor = e.target.value; });
+
+    //tools
+    function setActiveButton(name){
+      tool = name;
+      [paintBtn,eraseBtn,fillBtn,eyeBtn].forEach(b=>b.classList.remove('active'));
+      if(name==='paint') paintBtn.classList.add('active');
+      if(name==='erase') eraseBtn.classList.add('active');
+      if(name==='fill') fillBtn.classList.add('active');
+      if(name==='eye') eyeBtn.classList.add('active');
+    }
+    paintBtn.addEventListener('click', ()=> setActiveButton('paint'));
+    eraseBtn.addEventListener('click', ()=> setActiveButton('erase'));
+    fillBtn.addEventListener('click', ()=> setActiveButton('fill'));
+    eyeBtn.addEventListener('click', ()=> setActiveButton('eye'));
+
+    clearBtn.addEventListener('click', ()=>{ pushHistory(); cells = new Array(gridSize*gridSize).fill('#ffffff'); draw(); });
+    undoBtn.addEventListener('click', undo); redoBtn.addEventListener('click', redo);
+
+    sizeRange.addEventListener('input', (e)=>{ gridSize = parseInt(e.target.value,10); sizeLabel.textContent = `${gridSize} × ${gridSize}`; cells = new Array(gridSize*gridSize).fill('#ffffff'); pushHistory(); draw(); });
+
+    // pointer events
+    canvas.addEventListener('pointerdown', (e)=>{
+      const cell = pointerToCell(e); if(!cell) return;
+      isPointerDown = true; canvas.setPointerCapture(e.pointerId);
+      pushHistory(); applyToolAt(cell.index, e);
+    });
+    canvas.addEventListener('pointermove', (e)=>{
+      const cell = pointerToCell(e); if(cell) hoverCell.textContent = `${cell.x},${cell.y}`; else hoverCell.textContent = '—';
+      if(!isPointerDown) return; if(!cell) return; applyToolAt(cell.index, e, true);
+    });
+    window.addEventListener('pointerup', (e)=>{ if(isPointerDown){ isPointerDown=false; try{ canvas.releasePointerCapture(e.pointerId) }catch(_){} } });
+
+    function applyToolAt(index, evt, continuous=false){
+      if(tool === 'paint') paintCell(index, currentColor);
+      else if(tool === 'erase') paintCell(index, '#ffffff');
+      else if(tool === 'fill'){ const target = cells[index] || '#ffffff'; floodFill(index, target, currentColor); draw(); }
+      else if(tool === 'eye'){ currentColor = cells[index] || '#ffffff'; colorInput.value = currentColor; renderPalette(); setActiveButton('paint'); }
+      if(!continuous) draw();
+    }
+
+    // keyboard shortcuts
+    window.addEventListener('keydown', (e)=>{
+      if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='z'){ e.preventDefault(); undo(); }
+      if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='y'){ e.preventDefault(); redo(); }
+      if(e.key==='p' || e.key==='P') setActiveButton('paint');
+      if(e.key==='e' || e.key==='E') setActiveButton('erase');
+      if(e.key==='f' || e.key==='F') setActiveButton('fill');
+      if(e.key==='i' || e.key==='I') setActiveButton('eye');
+    });
+
+  // save/load/export
+  
+
+   
+  // open in new window for preview
+     
+
+    
+
+  // zoom controls
+    zoomIn.addEventListener('click', ()=>{ zoom = Math.min(8, zoom + 0.25); draw(); });
+    zoomOut.addEventListener('click', ()=>{ zoom = Math.max(0.5, zoom - 0.25); draw(); });
+    fitBtn.addEventListener('click', ()=>{ zoom = 1; draw(); });
+
+    // init
+    renderPalette();
+    pushHistory();
+    draw();
+
+    // expose debug helpers
+    window._proColoring = {
+      setGridSize(size){
+         gridSize = size; 
+         sizeRange.value = size; 
+         sizeLabel.textContent = `${gridSize} × ${gridSize}`; 
+         cells = new Array(gridSize*gridSize).fill('#ffffff');
+          draw();
+         },
+      getState(){
+         return { gridSize, cells: cells.slice(), palette };
+         }
+    };
+  </script>
+</body>
+</html>

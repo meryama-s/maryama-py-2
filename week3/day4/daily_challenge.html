@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Challenge: Mad Libs</title>
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  max-width: 480px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  user-select: none;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 900;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+form {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: inset 0 0 15px rgba(255,255,255,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+label {
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  color: #dcd6f7;
+}
+
+input[type="text"] {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: rgba(255,255,255,0.15);
+  color: white;
+  box-shadow: inset 0 2px 8px rgba(255,255,255,0.25);
+  outline: none;
+}
+
+input[type="text"]::placeholder {
+  color: #ddd;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+input[type="text"]:focus {
+  background-color: rgba(255,255,255,0.3);
+  box-shadow: 0 0 10px #a29bfe, inset 0 0 15px #a29bfe;
+  color: #fff;
+}
+
+button {
+  background: linear-gradient(45deg, #6c63ff, #a29bfe);
+  border: none;
+  padding: 15px 0;
+  border-radius: 30px;
+  color: white;
+  font-weight: 900;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background 0.4s ease, transform 0.25s ease;
+  box-shadow: 0 10px 20px rgba(108, 99, 255, 0.6);
+  letter-spacing: 1.5px;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #a29bfe, #6c63ff);
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+#shuffle-button {
+  background: linear-gradient(45deg, #ff6f91, #ff9671);
+  box-shadow: 0 10px 20px rgba(255, 111, 145, 0.7);
+  margin-top: 10px;
+}
+
+#shuffle-button:hover {
+  background: linear-gradient(45deg, #ff9671, #ff6f91);
+}
+
+#story {
+  margin-top: 25px;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  user-select: text;
+  min-height: 80px;
+}
+
+  </style>
+</head>
+<body>
+
+  <h1>Mad Libs</h1>
+
+  <form id="libform">
+    <label for="noun">Noun:</label>
+    <input type="text" id="noun" placeholder="Enter a noun" />
+
+    <label for="adjective">Adjective:</label>
+    <input type="text" id="adjective" placeholder="Enter an adjective" />
+
+    <label for="person">Someone's Name:</label>
+    <input type="text" id="person" placeholder="Enter a name" />
+
+    <label for="verb">Verb:</label>
+    <input type="text" id="verb" placeholder="Enter a verb" />
+
+    <label for="place">A place:</label>
+    <input type="text" id="place" placeholder="Enter a place" />
+
+    <button id="lib-button" type="submit">Lib it!</button>
+    <button id="shuffle-button" type="button" style="background-color:#e67e22; margin-top: 8px;">Shuffle Story</button>
+  </form>
+
+  <p>Generated story: 
+    <span id="story"></span>
+  </p>
+
+  <script>
+    const form = document.getElementById('libform');
+    const storyEl = document.getElementById('story');
+    const shuffleBtn = document.getElementById('shuffle-button');
+
+    let currentInputs = {};
+    let stories = [];
+
+    function createStories(values) {
+      return [
+        `${values.person} went to the ${values.place} with a ${values.adjective} ${values.noun}. They decided to ${values.verb} all day long!`,
+        `One day, a ${values.adjective} ${values.noun} met ${values.person} at the ${values.place}. They both wanted to ${values.verb} together.`,
+        `${values.person} couldn't believe how ${values.adjective} the ${values.noun} at the ${values.place} was. It made them want to ${values.verb} immediately!`
+      ];
+    }
+
+    function showRandomStory() {
+      if (!stories.length) {
+        storyEl.textContent = "Please fill the form and submit first!";
+        return;
+      }
+      const randomIndex = Math.floor(Math.random() * stories.length);
+      storyEl.textContent = stories[randomIndex];
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const noun = document.getElementById('noun').value.trim();
+      const adjective = document.getElementById('adjective').value.trim();
+      const person = document.getElementById('person').value.trim();
+      const verb = document.getElementById('verb').value.trim();
+      const place = document.getElementById('place').value.trim();
+
+      if (!noun || !adjective || !person || !verb || !place) {
+        alert("Please fill all fields!");
+        return;
+      }
+
+      currentInputs = { noun, adjective, person, verb, place };
+
+      stories = createStories(currentInputs);
+
+      storyEl.textContent = stories[0];
+    });
+
+    shuffleBtn.addEventListener('click', () => {
+      if (Object.keys(currentInputs).length === 0) {
+        alert("Please fill the form and click 'Lib it!' first.");
+        return;
+      }
+      showRandomStory();
+    });
+  </script>
+</body>
+</html>

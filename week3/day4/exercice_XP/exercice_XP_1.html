@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chocolate Facts</title>
+  <style>
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background-color: #f4f4f4;
+    padding: 30px;
+    color: #333;
+  }
+
+  article {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.7;
+  }
+
+  h1 {
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: font-size 0.3s ease;
+  }
+
+  h2 {
+    font-size: 24px;
+    color: #8e44ad;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  h3 {
+    font-size: 20px;
+    color: #2980b9;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #444;
+  }
+
+  button {
+    display: block;
+    margin: 25px auto;
+    padding: 10px 20px;
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #219150;
+  }
+
+  
+  .fade-out {
+    animation: fadeOut 2s forwards;
+  }
+
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+<article>
+  <h1> Some Facts </h1>
+  <h2> The Chocolate </h2>
+  <h3> History of the chocolate </h3>
+  <p> Chocolate is made from tropical Theobroma cacao tree seeds. 
+  Its earliest use dates back to the Olmec civilization in Mesoamerica.</p>
+  <p> After the European discovery of the Americas, chocolate became 
+  very popular in the wider world, and its demand exploded. </p>
+  <p> Chocolate has since become a popular food product that millions enjoy every day, 
+  thanks to its unique, rich, and sweet taste.</p> 
+  <p> But what effect does eating chocolate have on our health?</p> 
+</article>
+
+<button id="boldBtn">Bold Paragraphs</button>
+
+<script>
+  const h1 = document.querySelector('h1');
+  console.log(h1);
+
+  const article = document.querySelector('article');
+  const lastParagraph = article.querySelectorAll('p');
+  article.removeChild(lastParagraph[lastParagraph.length - 1]);
+
+  const h2 = document.querySelector('h2');
+  h2.addEventListener('click', () => {
+    h2.style.backgroundColor = 'red';
+  });
+
+  const h3 = document.querySelector('h3');
+  h3.addEventListener('click', () => {
+    h3.style.display = 'none';
+  });
+
+  const button = document.getElementById('boldBtn');
+  button.addEventListener('click', () => {
+    const paragraphs = document.querySelectorAll('p');
+    paragraphs.forEach(p => {
+      p.style.fontWeight = 'bold';
+    });
+  });
+
+  h1.addEventListener('mouseover', () => {
+    const randomSize = Math.floor(Math.random() * 100);
+    h1.style.fontSize = `${randomSize}px`;
+  });
+
+  const secondParagraph = document.querySelectorAll('p')[1];
+  secondParagraph.addEventListener('mouseover', () => {
+    secondParagraph.classList.add('fade-out');
+  });
+
+</script>
+
+</body>
+</html>

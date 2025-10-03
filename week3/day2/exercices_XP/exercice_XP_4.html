@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+//without parameters
+function hotelCost() {
+    let nights;
+    while (true) {
+        nights = prompt("How many nights would you like to stay in the hotel?");
+        if (nights !== null && nights.trim() !== "" && !isNaN(nights) && Number(nights) > 0) {
+            return Number(nights) * 140;
+        }
+        alert("Please enter a valid number of nights.");
+    }
+}
+
+function planeRideCost() {
+    let destination;
+    while (true) {
+        destination = prompt("What is your destination?");
+        if (destination !== null && destination.trim() !== "" && isNaN(destination)) {
+            destination = destination.trim().toLowerCase();
+            if (destination === "london") return 183;
+            else if (destination === "paris") return 220;
+            else return 300;
+        }
+        alert("Please enter a valid destination.");
+    }
+}
+
+function rentalCarCost() {
+    let days;
+    while (true) {
+        days = prompt("How many days would you like to rent the car?");
+        if (days !== null && days.trim() !== "" && !isNaN(days) && Number(days) > 0) {
+            days = Number(days);
+            let cost = days * 40;
+            if (days > 10) cost *= 0.95; // 5% discount
+            return cost;
+        }
+        alert("Please enter a valid number of days.");
+    }
+}
+
+function totalVacationCost() {
+    const carCost = rentalCarCost();
+    const hotelPrice = hotelCost();
+    const planePrice = planeRideCost();
+
+    console.log(`The car cost: $${carCost.toFixed(2)}, the hotel cost: $${hotelPrice.toFixed(2)}, the plane tickets cost: $${planePrice.toFixed(2)}.`);
+    const total = carCost + hotelPrice + planePrice;
+    return total;
+}
+
+const totalCostWithoutParams = totalVacationCost();
+console.log(`Total vacation cost: $${totalCostWithoutParams.toFixed(2)}`);
+
+
+//with parameters
+
+function hotelCost(nights) {
+    return nights * 140;
+}
+
+function planeRideCost(destination) {
+    destination = destination.trim().toLowerCase();
+    if (destination === "london") return 183;
+    else if (destination === "paris") return 220;
+    else return 300;
+}
+
+function rentalCarCost(days) {
+    let cost = days * 40;
+    if (days > 10) cost *= 0.95; // 5% discount
+    return cost;
+}
+
+function totalVacationCost() {
+    let nights, destination, days;
+    while (true) {
+        nights = prompt("How many nights would you like to stay in the hotel?");
+        if (nights !== null && nights.trim() !== "" && !isNaN(nights) && Number(nights) > 0) {
+            nights = Number(nights);
+            break;
+        }
+        alert("Please enter a valid number of nights.");
+    }
+
+    while (true) {
+        destination = prompt("What is your destination?");
+        if (destination !== null && destination.trim() !== "" && isNaN(destination)) {
+            destination = destination.trim();
+            break;
+        }
+        alert("Please enter a valid destination.");
+    }
+    while (true) {
+        days = prompt("How many days would you like to rent the car?");
+        if (days !== null && days.trim() !== "" && !isNaN(days) && Number(days) > 0) {
+            days = Number(days);
+            break;
+        }
+        alert("Please enter a valid number of days.");
+    }
+    const carCost = rentalCarCost(days);
+    const hotelPrice = hotelCost(nights);
+    const planePrice = planeRideCost(destination);
+
+    console.log(`The car cost: $${carCost.toFixed(2)}, the hotel cost: $${hotelPrice.toFixed(2)}, the plane tickets cost: $${planePrice.toFixed(2)}.`);
+
+    const total = carCost + hotelPrice + planePrice;
+    return total;
+}
+
+const totalCost = totalVacationCost();
+console.log(`Total vacation cost: $${totalCost.toFixed(2)}`);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

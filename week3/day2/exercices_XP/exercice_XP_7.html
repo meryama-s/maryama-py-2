@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Books List</title>
+</head>
+<body>
+
+  <section class="listBooks"></section>
+
+  <script>
+    const allBooks = [
+      {
+        title: "The Hobbit",
+        author: "J.R.R. Tolkien",
+        image: "https://upload.wikimedia.org/wikipedia/en/4/4a/TheHobbit_FirstEdition.jpg",
+        alreadyRead: true
+      },
+      {
+        title: "1984",
+        author: "George Orwell",
+        image: "https://upload.wikimedia.org/wikipedia/en/c/c3/1984first.jpg",
+        alreadyRead: false
+      }
+    ];
+
+    
+    window.onload = function() {
+      const section = document.querySelector(".listBooks");
+
+      allBooks.forEach(book => {
+        const bookDiv = document.createElement("div");
+
+        const text = document.createElement("p");
+        text.textContent = `${book.title} written by ${book.author}`;
+
+        if (book.alreadyRead) {
+          text.style.color = "red";
+        }
+
+        const image = document.createElement("img");
+        image.src = book.image;
+        image.style.width = "100px";
+
+        bookDiv.appendChild(text);
+        bookDiv.appendChild(image);
+
+        section.appendChild(bookDiv);
+      });
+    };
+  </script>
+
+</body>
+</html>

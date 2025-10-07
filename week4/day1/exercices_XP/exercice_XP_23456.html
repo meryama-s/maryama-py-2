@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        
+// exercice 2
+//the arrow function version
+const winBattle = () => true;
+let experiencePoints;
+experiencePoints = winBattle()? 10: 1;
+console.log(experiencePoints);
+
+
+//exercice 3
+const isString = (value) => typeof value ==='string';
+console.log(isString("hi geeks team !")); //true
+console.log(isString(24, 42)); //false
+
+
+
+//exercice 4
+const sum =(num1, num2) => num1 + num2;
+console.log(sum(8,3)); // 11
+
+
+//exercice 5
+function toGr(kg){
+   return kg*1000;
+
+}
+
+console.log(`${toGr(4)} gr`);
+
+//expression function 
+const toGrex = function (kgex){
+   return kgex* 1000 ;
+
+}
+console.log(`${toGrex(98)} gr`);
+
+//function declarations are hoisted but function expressions are not
+//ARROW FUNCTION 
+const toGrarr= (kgarr)=> kgarr*100;
+console.log(`${toGrarr(44)} gr`);
+
+    </script>
+</head>
+<body>
+    <!--exercice 6-->
+    <script src="exercice_XP_6.js"></script>
+</body>
+</html>

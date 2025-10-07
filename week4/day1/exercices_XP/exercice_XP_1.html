@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // #1
+function funcOne() {
+    const a = 5;
+    if(a > 1) {
+        a = 3;
+    }
+    alert(`inside the funcOne function ${a}`);
+}
+
+// #1.1 - run in the console:
+funcOne()
+// prediction: it will alert "inside the funcOne function 3"
+// because "a" is initially 5  and since 5 > 1 it gets reassigned to 3
+// #1.2 What will happen if the variable is declared 
+// with const instead of let ?
+// *reponse: it will return error because we can't reassign a value to a const variable after it's initialized 
+
+
+//#2
+let a = 0;
+function funcTwo() {
+    a = 5;
+}
+
+function funcThree() {
+    alert(`inside the funcThree function ${a}`);
+}
+
+// #2.1 - run in the console:
+funcThree()
+funcTwo()
+funcThree()
+
+// Prediction: 
+// first call to funcThree() alerts 0 (the initial value of a)
+// funcTwo() changes the value of a to 5
+// second call to funcThree() alerts 5
+
+// #2.2 What will happen if the variable is declared 
+// with const instead of let ?
+//retunrs error because we can't change the value of a const variable
+
+
+//#3
+function funcFour() {
+    window.a = "hello";
+}
+
+
+function funcFive() {
+    alert(`inside the funcFive function ${a}`);
+}
+
+// #3.1 - run in the console:
+funcFour()
+funcFive()
+// prediction: 
+// funcFour assigns a global variable "a" to the window object
+// funcFive alerts "inside the funcFive function hello" because it accesses window.a
+
+
+//#4
+let a = 1;
+function funcSix() {
+    let a = "test";
+    alert(`inside the funcSix function ${a}`);
+}
+
+
+// #4.1 - run in the console:
+funcSix()
+// prediction: it will alert "inside the funcSix function test" because the inner variable "a" shadows the outer one
+// #4.2 What will happen if the variable is declared 
+// with const instead of let ?
+//It will behave the same way const also respects block andfunction scope so it will still alert "test" as long as no reassignment happens
+
+
+//#5
+let a = 2;
+if (true) {
+    let a = 5;
+    alert(`in the if block ${a}`);
+}
+alert(`outside of the if block ${a}`);
+// Prediction:  it will first alert "in the if block 5" then alert "outside of the if block 2"Because the "a" inside the if block is a different variable ~block scoped~
+
+// #5.1 - run the code in the console
+// #5.2 What will happen if the variable is declared 
+// with const instead of let ? 
+//it's the same way const is also block-scoped so the inner and outer "a" are separate it will still alert 5 and then 2 as long as the const variables are not reassigned
+
+
+
+
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

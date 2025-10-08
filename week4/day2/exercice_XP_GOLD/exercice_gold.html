@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //exercice 1
+        [1, 2, 3].map(num => {
+  if (typeof num === 'number') return num * 2;
+  return ;
+}); //  result is 2, 4, 6 because the method map() it gonna loop through the array and check out if they're number or not is it's tru it will double it
+
+
+// exercice 2
+[[0, 1], [2, 3]].reduce(
+  (acc, cur) => {
+    return acc.concat(cur);
+  },
+  [1, 2],
+); // result 1, 2, 0, 1, 2, 3 it means that it started by the initial value [1,2] and it concatenated it with the array [[0, 1], [2, 3]]
+
+
+// exercice 3
+const arrayNum = [1, 2, 4, 5, 8, 9];
+const newArray = arrayNum.map((num, i) => {
+    console.log(num, i);
+    alert(num);
+    return num * 2;
+}) // i's values is the index of the array items
+
+
+
+//exercice 4
+const array = [[1],[2],[3],[[[4]]],[[[5]]]];
+const flating = [[1],[2],[3],[[[4]]],[[[5]]]].flat(1);
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

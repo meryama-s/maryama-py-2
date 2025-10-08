@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        //exercice 2
+        const colors = ["Blue", "Green", "Red", "Orange", "Violet", "Indigo", "Yellow"];
+        const ordinal = ["th","st","nd","rd"];
+        colors.forEach((item, index)=>{
+            let indexs = index+1;
+            let suffix;
+            if(indexs ===1){
+                suffix ='st';
+            }else if( indexs ===2){
+                suffix ='nd';
+            }else if (indexs ===3){
+                suffix ='th';
+            }else{
+                suffix ='th';
+            }
+            console.log(`${indexs}${suffix} # choice is ${item}`);
+        }
+
+    )
+
+    //exercice 3
+    // ------1------
+const fruits = ["apple", "orange"];
+const vegetables = ["carrot", "potato"];
+
+const result = ['bread', ...vegetables, 'chicken', ...fruits]; //... the spread operators expands the elements of each array into a new array so
+                                                              //so fruit and vegetable will be unpacked and merged with the other strings
+console.log(result);//["bread", "carrot", "potato", "chicken", "apple", "orange"]
+
+// ------2------
+const country = "USA";
+console.log([...country]); //["U", "S", "A"] each letter becomes element in a new array bcs is spread into individual characters
+
+// ------Bonus------
+let newArray = [...[,,]];
+console.log(newArray); //[undefined, undefined] bcs the array contains two empty slots so there's no values
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

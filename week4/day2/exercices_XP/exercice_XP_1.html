@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+const colors = ["Blue", "Green", "Red", "Orange", "Violet", "Indigo", "Yellow"];
+colors.forEach((item, index)=>{
+    console.log(`${index+ 1 }# choice is ${item}`)
+})
+
+// using some method to check out if there is 'violet' in the array or not
+
+if(colors.some((item) => item ==='Violet')){
+    console.log('Yeah');
+}else{
+    console.log('No');
+}
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

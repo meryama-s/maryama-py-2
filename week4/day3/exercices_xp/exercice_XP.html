@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        //exercice1
+        const person = {
+    name: 'John Doe',
+    age: 25,
+    location: {
+        country: 'Canada',
+        city: 'Vancouver',
+        coordinates: [49.2827, -123.1207]
+    }
+}
+
+const {name, location: {country, city, coordinates: [lat, lng]}} = person;
+
+console.log(`I am ${name} from ${city}, ${country}. Latitude(${lat}), Longitude(${lng})`); //I am John Doe from Vancouver, Canada. Latitude(49.2827), Longitude(-123.1207)
+// we used this way to get the object inside an object and array inside an object using destructuring assignment
+
+
+
+// exercice2
+function displayStudentInfo(first, last){
+    return `Your fullname is ${first} ${last}`//destructuring
+}
+
+displayStudentInfo({first: 'Elie', last:'Schoppik'});
+
+
+
+
+//exercice 3
+const users = { user1: 18273, user2: 92833, user3: 90315 }
+const userarray= Object.entries(users);
+console.log(userarray);
+
+const double= userarray.map(([key, value])=> [key, value*2]);
+console.log(double);
+
+
+//exercice 4
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+const member = new Person('John');
+console.log(typeof member); // the output is object because we incrumented the class Person to the object member using the new keyword
+
+
+//exercice 5
+class Dog {
+  constructor(name) {
+    this.name = name;
+  }
+};
+// number 2 is the correct one because we called the constructor for the name by using super and then we added the size
+  // 2
+class Labrador extends Dog {
+  constructor(name, size) {
+    super(name);
+    this.size = size;
+  }
+};
+
+
+
+//exercice 6
+// 1
+// [2] === [2] FALSE
+// {} === {} FALSE because they are different references in the memory not like primitive values 
+
+//2
+const object1 = { number: 5 }; 
+const object2 = object1; 
+const object3 = object2; 
+const object4 = { number: 5};
+
+object1.number = 4;
+console.log(object2.number)//4 the pass is by reference
+console.log(object3.number)//4 the pass is by reference
+console.log(object4.number)//5 because it's a different object in the memory
+
+
+//3
+class Animal{
+    constructor(name, color, type) {
+        this.name = name;
+        this.color = color;
+        this.type = type;
+    }
+}
+
+class Mammal extends Animal{
+    constructor(name, color, type){
+        super(name, color, type);
+        
+    }
+    sound(animalSound){
+         return `${animalSound} I'm a ${this.type}, named ${this.name} and I'm ${this.color}`;
+    }
+}
+const farmerCow = new Mammal('Lily', 'cow', 'brown and white');
+console.log(farmerCow.sound('Moooo'));
+
+
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

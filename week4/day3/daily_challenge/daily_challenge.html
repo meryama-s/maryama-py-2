@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        class Video{
+            constructor(title, uploader, time){
+                if(typeof title !== 'string' || typeof uploader !== 'string'){
+                    throw Error('it must be a string');
+                }
+
+                if(typeof time !== 'number'){
+                    throw Error('must be a number');
+                }
+
+                this.title = title;
+                this.uploader = uploader;
+                this.time = time;
+                
+            }
+            watch(watchVideo){
+                return `${this.uploader} watched all ${this.time}  seconds of ${this.title}`;
+            }
+
+        }
+        const video1 = new Video("learn OOP", "Maryama", 1000);
+        console.log(video1.watch());
+        
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

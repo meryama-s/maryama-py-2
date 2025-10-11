@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 340px;
+      text-align: center;
+    }
+ h2 {
+      margin-bottom: 15px;
+      color: #5a3e9b;
+    }
+ #userform {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      text-align: left;
+      font-weight: 500;
+      color: #333;
+    }
+
+    #fname,
+    #lname {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    #fname:focus,
+    #lname:focus {
+      border-color: #7b5cf1;
+    }
+
+    button {
+      background-color: #7b5cf1;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #9e7bff;
+    }
+
+    #output {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f7f5ff;
+      border-radius: 8px;
+      font-family: monospace;
+      color: #5a3e9b;
+      word-wrap: break-word;
+    }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <form id="userform">
+        <label for="fname">First name:</label>
+        <input type="text" name="fname" id="fname" required>
+
+        <label for="lname">Last name:</label>
+        <input type="text" name="lname" id="lname">
+
+        <button type="submit">Send</button>
+    </form>
+
+    <h2>Result:</h2>
+        <div id="output"></div>
+    </div>
+    <script>
+//get the element 
+const userform = document.getElementById("userform");
+const output = document.getElementById("output");
+
+//avoid page refresh 
+userform.addEventListener('submit', (event)=>{
+     event.preventDefault();
+
+     //get the value of fname and lname
+     const fname= document.getElementById("fname").value;
+     const lname= document.getElementById("lname").value;
+//creat elements 
+
+     const user= {fname, lname};
+        //convert them to JSON form 
+    const userJSON= JSON.stringify(user);
+    output.textContent = userJSON
+
+
+
+
+    });
+
+
+
+
+    </script>
+</body>
+</html>

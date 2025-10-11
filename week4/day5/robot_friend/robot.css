@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+body {
+  background-image: url('imgs/circuit-pattern.png');
+  background-color: rgba(90, 30, 150, 0.9);
+  background-repeat: repeat;
+  background-position: center;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+   font-family: "Press Start 2P", system-ui;
+  font-size: 48px;
+  margin: 25px 0;
+  color: #9ff36a;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px #0ccac4;
+}
+
+.title span {
+  color: #0ccac4;
+}
+
+#searchBox {
+  width: 60%;
+  max-width: 400px;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  background-color: #f2f2f2;
+  outline: none;
+  transition: 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 204, 196, 0.2);
+  text-align: center;
+}
+
+#searchBox:focus {
+  border-color: #0ccac4;
+  box-shadow: 0 0 15px rgba(12, 202, 196, 0.7);
+  background-color: #ffffff;
+}
+
+
+#robotContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.card {
+    background-image: url('imgs/card-pattern.png');
+  background-color: #59d4d4;
+  color: #111;
+  border-radius: 12px;
+  width: 200px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card img {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 10px;
+  background-color: #2d0f66;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.9);
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+  color: #111;
+}
+
+.card p {
+  color: #333;
+  font-size: 14px;
+}

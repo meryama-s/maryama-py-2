@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function isAnagram(str1, str2) {
+  // remove spaces and convert to lowercase
+  const s1 = str1.replace(/\s+/g, '').toLowerCase();
+  const s2 = str2.replace(/\s+/g, '').toLowerCase();
+
+  // compare the sorted letters
+  return s1.split('').sort().join('') === s2.split('').sort().join('');
+}
+
+// test examples
+console.log(isAnagram("Astronomer", "Moon starer"));       // true
+console.log(isAnagram("School master", "The classroom"));  // true
+console.log(isAnagram("The Morse Code", "Here come dots"));// true
+console.log(isAnagram("Hello", "World"));                  // false
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Page</title>
+</head>
+<body>
+    <h2>Received Data</h2>
+    <section id="displaySection"></section>
+
+    <script>
+        // get data from localStorage
+        const fname = localStorage.getItem('fname');
+        const lname = localStorage.getItem('lname');
+
+        // select section
+        const displaySection = document.getElementById('displaySection');
+
+        // check if data exists
+        if (fname && lname) {
+            displaySection.innerHTML = `<p>First Name: ${fname}</p><p>Last Name: ${lname}</p>`;
+        } else {
+            displaySection.innerHTML = `<p>No data found.</p>`;
+        }
+    </script>
+</body>
+</html>

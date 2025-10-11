@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         body {
+            background: linear-gradient(to bottom right, #f0fa94, #a58eff);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+         form {
+            background-color: rgb(204, 201, 201);
+            padding: 25px 35px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+         input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #ffdc6a;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ffe283;}
+
+    </style>
+</head>
+<body>
+            <!--exercice 2-->
+        
+    <form action="exercice_XP1.html" method="post">
+
+        <div>
+            <label for="name" class="label">Your name</label>
+            <input type="text" name="name" id="name" required>
+        </div>
+<br><br><br><br><br>
+        <div>
+            <label for="message" class="label">Write your message</label>
+            <textarea name="message" id="message" placeholder="write your message here!" maxlength="1000"></textarea>
+        </div>
+<br>
+        <div>
+            <input type="submit">
+        </div>
+
+<!--when the form uses the POST method the data will not appear in the URL Instead it will be sent in the body of the HTTP request it means the user cannot see it in the browser’s address bar-->
+
+
+
+
+
+
+    </form>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+//execice 1
+
+        function compareToTen(num){
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (num > 10) {
+                        reject(num + " is greater than 10");
+                    } else {
+                        resolve(num + " is less than or equal to 10");
+                    }
+                }, 1000);
+            });
+        }
+compareToTen(15)
+  .then(result => console.log(result))
+  .catch(error => console.log(error));
+  compareToTen(8)
+  .then(result => console.log(result))
+  .catch(error => console.log(error))
+
+//exercice 2
+
+function successPromise(){
+    new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("Success");
+
+        }, 4000);
+    })
+    .then(result => console.log(result));
+}
+successPromise()
+
+// execice 3
+
+const resolved = Promise.resolve(3);
+const rejected = Promise.reject("BOOOOOOOO!");
+
+resolved.then(result => console.log(result));
+rejected.catch(error => console.log(error));
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

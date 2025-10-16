@@ -1,5 +1,0 @@
-CREATE TABLE IF NOT EXISTS menu_items (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    price NUMERIC NOT NULL
-);

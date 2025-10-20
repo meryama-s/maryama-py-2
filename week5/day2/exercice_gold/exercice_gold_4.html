@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+// EXERCICE 4
+
+        const urls = [
+        "https://jsonplaceholder.typicode.com/users",
+        "https://jsonplaceholder.typicode.com/posts",
+        "https://jsonplaceholder.typicode.com/albums"
+      ];
+
+async function getData(){
+    try{
+    const responses = await Promise.all(urls.map(url => fetch(url)));
+    responses.forEach(response => {
+        if(!response.ok){
+            throw new Error(`could not fetch ${response.status}`)
+        }
+        
+    });
+    const data= await Promise.all(responses.map(response =>response.json()));
+    const [users, posts, albums]= data;
+
+    console.log('Users:', users);
+    console.log('Posts:', posts);
+    console.log('Albums:', albums);
+
+}catch(error) {
+        console.log("ooooooops");
+        console.error(error);
+
+}
+}
+
+getData();
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

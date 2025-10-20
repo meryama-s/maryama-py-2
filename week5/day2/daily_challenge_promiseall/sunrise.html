@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body {
+        font-family: "Poppins", Arial, sans-serif;
+        background: linear-gradient(to bottom right, #ffecd2, #fcb69f);
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        text-align: center;
+        color: #333;
+      }
+  
+      h1 {
+        width: 100%;
+        text-align: center;
+        margin-top: 40px;
+        font-size: 2.2em;
+        color: #444;
+      }
+  
+      #formsun {
+        background-color: #fff;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        width: 320px;
+        margin: 20px auto;
+        transition: transform 0.2s ease;
+      }
+  
+      #formsun:hover {
+        transform: scale(1.02);
+      }
+  
+      #formsun h2 {
+        margin-bottom: 10px;
+        color: #555;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+      }
+  
+      label {
+        display: block;
+        text-align: left;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+  
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 4px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+  
+      input:focus {
+        border-color: #ff8c42;
+        outline: none;
+        box-shadow: 0 0 4px #ff8c42;
+      }
+  
+      button {
+        background-color: #ff8c42;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+      }
+  
+      button:hover {
+        background-color: #ff6f00;
+      }
+  
+      #result {
+        margin: 20px auto;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        width: 80%;
+        max-width: 400px;
+      }
+  
+      #result p {
+        font-size: 1.1em;
+        margin: 10px 0;
+      }
+  
+      strong {
+        color: #e65100;
+      }</style>
+</head>
+<body>
+    <h1>Sunrise Time</h1>
+    <form id="formsun">
+        <h2>City #1</h2>
+        <label>Latitude: <input type="number" id="lat1" step="any" required></label><br>
+        <label>Longitude: <input type="number" id="lon1" step="any" required></label>
+        <br><br>
+
+        <h2>City #2</h2>
+        <label>Latitude: <input type="number" id="lat2" step="any" required></label><br>
+        <label>Longitude: <input type="number" id="lon2" step="any" required></label>
+        
+        <button type="submit">Get sunrise time</button>
+
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        //get elements 
+const formsun = document.getElementById('formsun');
+
+const result = document.getElementById('result');
+
+formsun.addEventListener('submit', async (event)=>{
+    event.preventDefault();
+    // retrieving values
+const lat1 = document.getElementById('lat1').value;
+const lon1 = document.getElementById('lon1').value;
+const lat2 = document.getElementById('lat2').value;
+const lon2 = document.getElementById('lon2').value;
+try{
+    // urls 
+    const url1 = `https://api.sunrise-sunset.org/json?lat=${lat1}&lng=${lon1}&formatted=0`;
+    const url2 = `https://api.sunrise-sunset.org/json?lat=${lat2}&lng=${lon2}&formatted=0`;
+
+    // using promise.all to fetch them at the same time
+    const responses = await Promise.all([fetch(url1), fetch(url2)]);
+    // check the error
+    responses.forEach(resp =>{
+        if(!resp.ok){
+            throw new Error(`could not fetch ${resp.url}`);
+        }
+    });
+    //parse json data
+    const data = await Promise.all(responses.map(resp => resp.json()));
+
+    // exetracting sunrise 
+    const sunrise1 = new Date(data[0].results.sunrise).toLocaleTimeString("en-US", { timeZone: "UTC" });
+    const sunrise2 = new Date(data[1].results.sunrise).toLocaleTimeString("en-US", { timeZone: "UTC" });
+
+    // result
+    result.innerHTML =`<p>City 1 Sunrise (lat:${lat1}, lng:${lon1}): <strong>${sunrise1}</strong></p>
+                       <p>City 2 Sunrise (lat:${lat2}, lng:${lon2}): <strong>${sunrise2}</strong></p>`;
+                    
+
+}catch (error) {
+        console.error("An error occurred", error);
+    }
+});
+
+    </script>
+</body>
+</html>

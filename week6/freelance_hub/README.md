@@ -10,7 +10,7 @@ This repository is a scaffold for a modular Express + MongoDB REST API (MERN bac
 3. `npm run dev`
 
 
-## Endpoints (examples)
+## Endpoints
 - POST /api/auth/signup -> { email, password, role }
 - POST /api/auth/login -> { email, password }
 - POST /api/projects -> (auth) create project

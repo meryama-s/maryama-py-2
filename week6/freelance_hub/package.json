@@ -1,0 +1,25 @@
+{
+  "name": "freelance_hub",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --watch src --exec node --experimental-import-meta-resolve ./src/main.js",
+    "start": "node ./src/main.js",
+    "clean": "rd /s /q node_modules && npm install"
+
+  },
+  "imports": {
+    "#@/": "./src/"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

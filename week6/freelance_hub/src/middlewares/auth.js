@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'; //! to ensure jwt token
-import  {UserService}  from '../modules/auth/services/index.js';
+import  {UserService}  from '#@/modules/auth/services/index.js';
 
 //* auth middlware
 export async function auth(req, res, next) {

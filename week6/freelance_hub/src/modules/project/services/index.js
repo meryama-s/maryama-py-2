@@ -1,4 +1,5 @@
-import Project from '../model/index.js';
+import Project from '#@/modules/project/model/index.js';
+
 
 
 export const ProjectService = {

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { auth } from '../../../middlewares/auth.js';
-import { isAdmin, isOwnerOrAdmin } from '../../../middlewares/roles.js';
-import { ProjectService } from '../services/index.js';
+import { auth } from '#@/middlewares/auth.js';
+import { isAdmin, isOwnerOrAdmin } from '#@/middlewares/roles.js';
+import { ProjectService } from '#@/modules/project/services/index.js';
 
 const router = Router();
 

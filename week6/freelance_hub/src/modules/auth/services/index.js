@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../model/index.js';
+import User from '#@/modules/auth/model/index.js';
+
 export const UserService ={
     async sigup({email, password, role}){
         const exists= await User.findOne({email});

@@ -32,8 +32,21 @@ const newArray = arrayNum.map((num, i) => {
 
 
 //exercice 4
+// 1
 const array = [[1],[2],[3],[[[4]]],[[[5]]]];
-const flating = [[1],[2],[3],[[[4]]],[[[5]]]].flat(1);
+console.log(array.flat(2)); // [1,2,3,[4],[5]]
+
+// 2
+const greeting = [["Hello", "young", "grasshopper!"], ["you", "are"], ["learning", "fast!"]];
+console.log(greeting.map(w => w.join(" "))); // ["Hello young grasshopper!","you are","learning fast!"]
+
+// 3
+console.log(greeting.map(w => w.join(" ")).join(" ")); 
+// "Hello young grasshopper! you are learning fast!"
+
+// 4
+const trapped = [[[[[[[[[[[[[[[[[[[[[[[[[[3]]]]]]]]]]]]]]]]]]]]]]]]]];
+console.log(trapped.flat(Infinity)); // [3]
 
 
     </script>

@@ -1,4 +1,9 @@
 .vscode/
+node_modules/
 settings.json
 create_table.sql
 my-data.session.sql
+.env
+/dist
+*.log
+*.sqlite
